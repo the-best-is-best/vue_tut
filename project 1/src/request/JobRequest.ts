@@ -23,17 +23,16 @@ export default class JobRequest {
         this.salary = salary;
         this.company = company;
     }
-
-    // toJson():object{
-    //     return {
-    //         title: this.title,
-    //         type: this.type,
-    //         location: this.location,
-    //         description: this.description,
-    //         salary: this.salary,
-    //         company: this.company.toJson()
-    //     }
-    // }
+   static fromJSON(json: any): JobRequest {
+        return new JobRequest(
+            json.title,
+            json.type,
+            json.location,
+            json.description,
+            json.salary,
+            CompanyRequest.fromJSON(json.company)
+        );
+    }
 }
 
 

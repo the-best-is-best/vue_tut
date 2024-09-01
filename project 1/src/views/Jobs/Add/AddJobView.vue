@@ -1,7 +1,6 @@
 <script setup>
 import { JobTypes } from '@/enums/JobTypes';
 import { default as AddJobViewState } from '@/views/Jobs/Add/AddJobViewState';
-
 const stateAddJob = new AddJobViewState();
 </script>
 

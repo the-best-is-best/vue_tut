@@ -15,13 +15,13 @@ export default class CompanyRequest {
         this.contactEmail = contactEmail;
         this.contactPhone = contactPhone;
     }
-
-    // toJson(): object {
-    //     return {
-    //         name: this.name,
-    //         description: this.description,
-    //         contactEmail: this.contactEmail,
-    //         contactPhone: this.contactPhone
-    //     }
-    // }
+   
+    static fromJSON(json: any): CompanyRequest {
+        return new CompanyRequest(
+            json.name,
+            json.description,
+            json.contactEmail,
+            json.contactPhone
+        );
+    }
 }

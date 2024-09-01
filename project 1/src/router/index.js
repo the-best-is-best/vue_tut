@@ -1,5 +1,6 @@
 import HomeView from '@/views/Home/HomeView.vue';
 import AddJobView from '@/views/Jobs/Add/AddJobView.vue';
+import EditJobView from '@/views/Jobs/Edit/EditJobView.vue';
 import JobsView from '@/views/Jobs/JobsView.vue';
 import JobView from '@/views/Jobs/JobView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
@@ -30,6 +31,11 @@ const router = createRouter({
         component: AddJobView
       },
       {
+        path: "/job/edit/:id",
+        name: "editJob",
+        component: EditJobView
+      },
+      {
         path: '/:catchAll(.*)',
         name: 'notFound',
         component: NotFoundView
@@ -37,20 +43,6 @@ const router = createRouter({
     ],
 });
 
-// Navigation guard to handle invalid job IDs
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.name === 'job')) {
-    const id = to.params.id;
-    // Example condition for invalid ID; adjust as necessary
-    if (!id || id === 'invalid') {
-      next({ name: 'notFound' }); // Redirect to Not Found page or handle as needed
-    } else {
-      next(); // Proceed to the job view
-    }
-  } else {
-    next(); // Proceed as usual
-  }
-});
 
 
 export default router;

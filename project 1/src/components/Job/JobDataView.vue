@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
 const route = useRoute()
-const jobId = Number.parseInt(route.params.id);
+const jobId = (route.params.id);
 const stateJob = new JobDataState(jobId);
 </script>
 
@@ -28,7 +28,7 @@ const stateJob = new JobDataState(jobId);
               <div
                 class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start"
               >
-              <i class="pi pi-map-marker text-orange-700"></i>
+              <i class="pi pi-map-marker text-orange-700 text-lg mr-2"></i>
 
                 <p class="text-orange-700">{{ stateJob.state.job.location }}</p>
               </div>
@@ -82,7 +82,7 @@ const stateJob = new JobDataState(jobId);
                 class="bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
                 >Edit Job</RouterLink
               >
-              <button
+              <button @click="stateJob.deleteJob"
                 class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
               >
                 Delete Job

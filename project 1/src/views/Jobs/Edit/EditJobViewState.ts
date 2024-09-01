@@ -1,0 +1,59 @@
+import MyApis from "@/api/my_apis";
+import JobRequest from "@/request/JobRequest";
+import router from '@/router';
+import { reactive } from "vue";
+import { useToast } from 'vue-toastification';
+
+export default class EditJobViewState {
+    state: {
+       form: JobRequest,
+       loading: Boolean
+    }
+     
+    jobId: String
+    toast  = useToast();
+    constructor(jobId: String) {
+        this.jobId = jobId;
+        this.state = reactive({
+            form: new JobRequest(),
+            loading: false
+        })
+
+        this.getJob();
+    }
+
+    private async getJob() {
+        this.state = reactive({
+            form: new JobRequest(),
+            loading: true
+        })
+        try {
+            const job = await MyApis.getJob(this.jobId);
+            this.state.form = JobRequest.fromJSON(job);
+        } catch (error) {
+            console.log("error", error);
+        } finally {
+            this.state.loading = false;
+        }
+    }
+
+    async updateJob() {
+        this.state.loading = true;
+        try {
+            var res = await MyApis.updateJob(this.jobId, this.state.form);
+            if(res != null){
+                this.toast.success("Job updated");
+                router.push(`/job/${res}`);
+            }else{
+                this.toast.error("Job not updated");
+            }
+        } catch (error) {
+            console.log("error", error);
+        } finally {
+            this.state.loading = false;
+        }
+    }
+
+   
+   
+}
