@@ -1,6 +1,7 @@
 import MyApis from "@/api/my_apis";
 import JobRequest from "@/request/JobRequest";
 import router from '@/router';
+import { hideLoader, showLoader } from '@/views/loader/loaderStore';
 import { reactive } from "vue";
 import { useToast } from 'vue-toastification';
 
@@ -23,6 +24,7 @@ export default class EditJobViewState {
     }
 
     private async getJob() {
+        showLoader();
         this.state = reactive({
             form: new JobRequest(),
             loading: true
@@ -34,10 +36,13 @@ export default class EditJobViewState {
             console.log("error", error);
         } finally {
             this.state.loading = false;
+            hideLoader();
         }
     }
 
     async updateJob() {
+        showLoader();
+      
         this.state.loading = true;
         try {
             var res = await MyApis.updateJob(this.jobId, this.state.form);
@@ -51,6 +56,7 @@ export default class EditJobViewState {
             console.log("error", error);
         } finally {
             this.state.loading = false;
+            hideLoader();
         }
     }
 

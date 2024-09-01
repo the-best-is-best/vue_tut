@@ -4,6 +4,7 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
+import { hideLoader, showLoader } from '@/views/loader/loaderStore';
 
 export default class JobDataState {
     state : {
@@ -25,7 +26,7 @@ export default class JobDataState {
             job: null,
             loading: true
         });
-        
+        showLoader();
         try {
             // Create a promise that resolves after 1 second
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -38,6 +39,7 @@ export default class JobDataState {
             
         } finally {
             this.state.loading = false; // Set loading to false after jobs have been fetched
+             hideLoader();
         }
     }
 
