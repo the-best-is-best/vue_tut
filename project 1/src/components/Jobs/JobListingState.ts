@@ -1,27 +1,31 @@
-import { computed, defineProps, ref } from 'vue';
-import JobModel from '../../models/JobModel';
+// JobListingState.ts
+import JobModel from '@/models/JobModel'; // Adjust the path as needed
+import { reactive } from 'vue';
 
-class JobListingState {
-    
- jobPops = defineProps({
-    job: JobModel
-})
+export default class JobListingState {
+  state: {
+    job: JobModel;
+    showFullDescription: boolean;
+  };
 
- showFullDescription = ref(false)
+  constructor(job: JobModel) {
+    // Initialize the reactive state
+    this.state = reactive({
+      job,
+      showFullDescription: false
+    });
+  }
 
+  toggleDescription() {
+    this.state.showFullDescription = !this.state.showFullDescription;
+  }
 
- toggleDescription = () => {
-    this.showFullDescription.value = !this.showFullDescription.value
-}
-
- truncatedDescription = computed(() => {
-    let description = this.jobPops.job.description
-    if(!this.showFullDescription.value) {
-        description = description.substring(0, 90) + '...'
+  // Define a computed property
+  get truncatedDescription() {
+    let description = this.state.job.description;
+    if (!this.state.showFullDescription) {
+      description = description.substring(0, 90) + '...';
     }
-
-    return description
-})
+    return description;
+  }
 }
-
-export default JobListingState
